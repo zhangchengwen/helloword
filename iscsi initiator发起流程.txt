@@ -1,0 +1,50 @@
+http://www.virtues.it/2010/04/howto-w2k8-iscsicli/
+http://blog.sina.com.cn/s/blog_3fa319f70100oaaq.html
+
+iqn.1991-05.com.microsoft:win-1f6qsaba0aj-iqn.iscsi3.3-target
+iqn.1991-05.com.microsoft:win-1f6qsaba0aj-target1-target
+
+
+操作步骤
+#把MSiSCSi服务设置为自动启动
+sc.exe config msiscsi start= auto
+
+#启动MSiSCSi服务
+net start msiscsi
+
+#创建(发现)Target门户，添加Ip-San的ip
+iscsicli QAddTargetPortal <IP Address>
+
+#查看Targets，列表资源登录情况
+iscsicli ListTargets
+
+#选择一个Target登录
+iscsicli QloginTarget <iqn>
+
+登录成功会有如下提示：
+Microsoft iSCSI 发起程序版本 6.1 內部版本 7601
+
+会话 ID 是 0xfffffa801120f018-0x4000013700000011
+连接 ID 是 0xfffffa801120f018-0x28
+操作成功完成。
+
+#查看链接状态是已连接
+iscsicli.exe SessionList
+
+#查看资源映射情况（上面步骤成功的话这里可以看到有磁盘已经连接到服务器上）
+iscsicli.exe ReportTargetMappings
+
+#退出登录
+iscsicli LogoutTarget <session-id>
+
+
+
+iSCSI initiator发起命令集
+sc.exe config msiscsi start= auto
+net start msiscsi
+iscsicli QAddTargetPortal <IP Address>
+iscsicli ListTargets
+iscsicli QloginTarget <iqn>
+iscsicli.exe SessionList
+iscsicli.exe ReportTargetMappings
+iscsicli LogoutTarget <session-id>
